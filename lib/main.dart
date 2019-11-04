@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
+import 'env.dart';
+
 
 void main() => runApp(MyApp());
 
@@ -23,7 +26,16 @@ class MyApp extends StatelessWidget {
 class MyCustomForm extends StatefulWidget {
   @override
   MyCustomFormState createState() {
+    _testUri();
     return MyCustomFormState();
+  }
+  _testUri() async{
+    try {
+      var response = await http.get(Uri.parse("https://api.foursquare.com/v2/venues/search?client_id=ZJOYKBUEJOZ4DVRYKWWARZQIZUCLR54W5UAUODPILW3UD2KV&client_secret="+CLEF+"&v=20180323&limit=1&ll=47.2704,-1.5184&query=coffee"));
+      print('Response body: ${response.body}');
+    } catch (e) {
+      print("================== ERREUR URL TEST : "+e.toString());
+    }
   }
 }
 
