@@ -47,6 +47,16 @@ class MyCustomFormState extends State<MyCustomForm> {
               return null;
             },
           ),
+          TextFormField(
+            decoration: InputDecoration(
+                labelText: 'Place'),
+            validator: (value) {
+              if (value.isEmpty) {
+                return 'Please enter some text';
+              }
+              return null;
+            },
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 16.0),
             child: RaisedButton(
