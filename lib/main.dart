@@ -4,7 +4,6 @@ import 'env.dart';
 import 'dart:convert';
 import 'Venues.dart';
 
-
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
@@ -37,34 +36,44 @@ class MyCustomFormState extends State<MyCustomForm> {
 
   @override
   Widget build(BuildContext context) {
-    _testUri(String motchercher,String ville) async{
+    _testUri(String motchercher, String ville) async {
       var lieux = new List<Venues>();
       try {
-        var response = await http.get(Uri.parse("https://api.foursquare.com/v2/venues/search?client_id=ZJOYKBUEJOZ4DVRYKWWARZQIZUCLR54W5UAUODPILW3UD2KV&client_secret="+CLEF+"&v=20180323&limit=50&near="+ville+"&query="+motchercher));
-        print('Response \t\t: ${response.body}'+"\n\n");
+        var response = await http.get(Uri.parse(
+            "https://api.foursquare.com/v2/venues/search?client_id=ZJOYKBUEJOZ4DVRYKWWARZQIZUCLR54W5UAUODPILW3UD2KV&client_secret=" +
+                CLEF +
+                "&v=20180323&limit=50&near=" +
+                ville +
+                "&query=" +
+                motchercher));
+        print('Response \t\t: ${response.body}' + "\n\n");
         Map venueMap = json.decode(response.body);
-        int count=0;
-        while(venueMap['response']['venues'][count] != null){
+        int count = 0;
+        while (venueMap['response']['venues'][count] != null) {
           print('Response \n\n\t: ${venueMap['response']['venues'][count]}');
-          var venue = Venues.fromMappedJson(venueMap['response']['venues'][count]);
-          print("=========================================================\n"+venue.id + " "+ venue.name);
+          var venue =
+              Venues.fromMappedJson(venueMap['response']['venues'][count]);
+          print("=========================================================\n" +
+              venue.id +
+              " " +
+              venue.name);
           lieux.add(venue);
           count++;
         }
-       // return lieux; comment on fait un ptn de return ???
+        // return lieux; comment on fait un ptn de return ??? Tu peux pass ici -- jcrois faut faire une fonction que tu apelle
 
       } catch (e) {
-        print("================== ERREUR URL TEST : "+e.toString());
+        print("================== ERREUR URL TEST : " + e.toString());
       }
     }
+
     return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TextFormField(
-            decoration: InputDecoration(
-          labelText: 'Location'),
+            decoration: InputDecoration(labelText: 'Location'),
             validator: (value) {
               if (value.isEmpty) {
                 return 'Please enter some text';
@@ -73,8 +82,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             },
           ),
           TextFormField(
-            decoration: InputDecoration(
-                labelText: 'Place'),
+            decoration: InputDecoration(labelText: 'Place'),
             validator: (value) {
               if (value.isEmpty) {
                 return 'Please enter some text';
@@ -87,7 +95,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             child: RaisedButton(
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  _testUri("bar","nantes");
+                  _testUri("bar", "nantes");
                   Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('Processing Data')));
                 }
@@ -95,7 +103,35 @@ class MyCustomFormState extends State<MyCustomForm> {
               child: Text('Confirmer'),
             ),
           ),
+          RaisedButton(
+            child: Text('Open route'),
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SecondRoute()),
+              );
+            },
+          ),
         ],
+      ),
+    );
+  }
+}
+
+class SecondRoute extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text("Second Route"),
+      ),
+      body: Center(
+        child: RaisedButton(
+          onPressed: () {
+            Navigator.pop(context);
+          },
+          child: Text('Go back!'),
+        ),
       ),
     );
   }
