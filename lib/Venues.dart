@@ -17,5 +17,10 @@ class Venues{
 
   Venues.fromMappedJson(Map<String, dynamic> json):id = json['id'], name = json['name'], location = new Location(json['lat'], json['lng'], json['distance'], json['country'], json['adresse'], json['city'],json['state'],json['postalCode']),categories = new Categories(json['categories'][0]['id'], json['categories'][0]['name']),stat = new Stat(json['stats']['tipCount'], json['stats']['usersCount']);
 
+  @override
+  String toString() {
+    return 'Venues{id: $id, name: $name, location: $location, categories: $categories, stat: $stat}';
+  }
+
 
 }

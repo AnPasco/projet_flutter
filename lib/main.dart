@@ -3,6 +3,9 @@ import 'package:http/http.dart' as http;
 import 'env.dart';
 import 'dart:convert';
 import 'Venues.dart';
+import 'Location.dart';
+import 'Categories.dart';
+import 'Stats.dart';
 
 void main() => runApp(MyApp());
 
@@ -33,11 +36,16 @@ class MyCustomForm extends StatefulWidget {
 
 class MyCustomFormState extends State<MyCustomForm> {
   final _formKey = GlobalKey<FormState>();
+  var lieux = new List<Venues>();
+
+  @override
+  void initState() {
+    lieux.add(new Venues("", "", null, null, null));
+  }
 
   @override
   Widget build(BuildContext context) {
     _testUri(String motchercher, String ville) async {
-      var lieux = new List<Venues>();
       try {
         var response = await http.get(Uri.parse(
             "https://api.foursquare.com/v2/venues/search?client_id=ZJOYKBUEJOZ4DVRYKWWARZQIZUCLR54W5UAUODPILW3UD2KV&client_secret=" +
@@ -59,7 +67,9 @@ class MyCustomFormState extends State<MyCustomForm> {
               venue.name);
           lieux.add(venue);
           count++;
-        }
+        } // Append Text to the list
+        // Clear the Text area
+        setState(() {});
         // return lieux; comment on fait un ptn de return ??? Tu peux pass ici -- jcrois faut faire une fonction que tu apelle
 
       } catch (e) {
@@ -67,12 +77,16 @@ class MyCustomFormState extends State<MyCustomForm> {
       }
     }
 
+    TextEditingController _txtController1 = TextEditingController();
+    TextEditingController _txtController2 = TextEditingController();
+
     return Form(
       key: _formKey,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TextFormField(
+            controller: _txtController1,
             decoration: InputDecoration(labelText: 'Location'),
             validator: (value) {
               if (value.isEmpty) {
@@ -82,6 +96,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             },
           ),
           TextFormField(
+            controller: _txtController2,
             decoration: InputDecoration(labelText: 'Place'),
             validator: (value) {
               if (value.isEmpty) {
@@ -95,7 +110,7 @@ class MyCustomFormState extends State<MyCustomForm> {
             child: RaisedButton(
               onPressed: () {
                 if (_formKey.currentState.validate()) {
-                  _testUri("bar", "nantes");
+                  _testUri(_txtController1.text, _txtController2.text);
                   Scaffold.of(context)
                       .showSnackBar(SnackBar(content: Text('Processing Data')));
                 }
@@ -112,6 +127,12 @@ class MyCustomFormState extends State<MyCustomForm> {
               );
             },
           ),
+          Expanded(
+              child: new ListView.builder(
+                  itemCount: lieux.length,
+                  itemBuilder: (BuildContext ctxt, int Index) {
+                    return new Text(lieux[Index].toString(),);
+                  })),
         ],
       ),
     );
