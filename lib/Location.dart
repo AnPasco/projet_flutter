@@ -14,6 +14,7 @@ class Location {
   int distance;
 
 
+
   Location(this.lat, this.lng, this.distance, this.country, this.address, this.city,this.state,this.postalCode);
 
   static fromJson(Map<String,dynamic > json) {}

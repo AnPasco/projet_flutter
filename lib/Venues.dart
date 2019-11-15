@@ -19,7 +19,7 @@ class Venues{
 
   @override
   String toString() {
-    return 'Venues{id: $id, name: $name, location: $location, categories: $categories, stat: $stat}';
+    return name +" " + location.address;
   }
 
 

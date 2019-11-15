@@ -130,8 +130,8 @@ class MyCustomFormState extends State<MyCustomForm> {
           Expanded(
               child: new ListView.builder(
                   itemCount: lieux.length,
-                  itemBuilder: (BuildContext ctxt, int Index) {
-                    return new Text(lieux[Index].toString(),);
+                  itemBuilder: (BuildContext context, int Index) {
+                    return new Text(lieux[Index].toString(),style: TextStyle(fontSize: 20),);
                   })),
         ],
       ),
