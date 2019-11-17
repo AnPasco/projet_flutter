@@ -9,7 +9,7 @@ class Location {
   String country;
   String city;
   String state;
-  int postalCode;
+  String postalCode;
   String address;
   int distance;
 
@@ -21,7 +21,7 @@ class Location {
 
   @override
   String toString() {
-    return '  ville $city \n  address: $address\n  vous êtes à une distance de $distance m';
+    return '  ville : $city \n  code postale : $postalCode\n  departement : $state';
   }
 
 }

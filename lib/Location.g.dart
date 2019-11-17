@@ -15,7 +15,7 @@ Location _$LocationFromJson(Map<String, dynamic> json) {
       json['address'] as String,
       json['city'] as String,
       json['state'] as String,
-      json['postalCode'] as int);
+      json['postalCode'] as String);
 }
 
 Map<String, dynamic> _$LocationToJson(Location instance) => <String, dynamic>{
