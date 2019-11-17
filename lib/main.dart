@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'env.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:convert';
 import 'Venues.dart';
 import 'Location.dart';
@@ -70,6 +71,7 @@ class MyCustomFormState extends State<MyCustomForm> {
         print("================== ERREUR URL TEST : " + e.toString());
       }
     }
+
     TextEditingController _txtController1 = TextEditingController();
     TextEditingController _txtController2 = TextEditingController();
 
@@ -80,7 +82,7 @@ class MyCustomFormState extends State<MyCustomForm> {
         children: <Widget>[
           TextFormField(
             controller: _txtController1,
-            decoration: InputDecoration(labelText: 'Location'),
+            decoration: InputDecoration(labelText: 'Lieux'),
             validator: (value) {
               if (value.isEmpty) {
                 return 'Please enter some text';
@@ -90,7 +92,7 @@ class MyCustomFormState extends State<MyCustomForm> {
           ),
           TextFormField(
             controller: _txtController2,
-            decoration: InputDecoration(labelText: 'Place'),
+            decoration: InputDecoration(labelText: 'Ville'),
             validator: (value) {
               if (value.isEmpty) {
                 return 'Please enter some text';
@@ -124,10 +126,13 @@ class MyCustomFormState extends State<MyCustomForm> {
                           height: 1.6,
                         ),
                       ),
-                      onTap: () {Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => SecondRoute(lieux[index])),
-                      );},
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                              builder: (context) => SecondRoute(lieux[index])),
+                        );
+                      },
                     );
                   })),
         ],
@@ -143,9 +148,7 @@ class SecondRoute extends StatelessWidget {
   TextEditingController _ControllerCategorie = TextEditingController();
   TextEditingController _ControllerStats = TextEditingController();
 
-
   SecondRoute(this.venues);
-
 
   @override
   Widget build(BuildContext context) {
@@ -161,39 +164,50 @@ class SecondRoute extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TextFormField(
-            style: new TextStyle(fontWeight: FontWeight.normal, color: Colors.black),
-            decoration: InputDecoration(labelText: 'Nom',contentPadding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 10.0),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(32.0)
-              ),),
+            style: new TextStyle(
+                fontWeight: FontWeight.normal, color: Colors.black),
+            decoration: InputDecoration(
+              labelText: 'Nom',
+              contentPadding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 10.0),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            ),
             enabled: false,
-            controller:_ControllerNom ,
-
+            controller: _ControllerNom,
           ),
           TextFormField(
-            style: new TextStyle(fontWeight: FontWeight.normal, color: Colors.black),
-            decoration: InputDecoration(labelText: 'Location',contentPadding: EdgeInsets.fromLTRB(20.0, 50.0, 50.0, 50.0),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(32.0)
-              ),),
+            style: new TextStyle(
+                fontWeight: FontWeight.normal, color: Colors.black),
+            decoration: InputDecoration(
+              labelText: 'Location',
+              contentPadding: EdgeInsets.fromLTRB(20.0, 50.0, 50.0, 50.0),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            ),
             enabled: false,
             controller: _ControllerLocalision,
           ),
           TextFormField(
-            style: new TextStyle(fontWeight: FontWeight.normal, color: Colors.black),
-            decoration: InputDecoration(labelText: 'Catégories',contentPadding: EdgeInsets.fromLTRB(20.0, 70.0, 20.0, 10.0),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(32.0)
-              ),),
+            style: new TextStyle(
+                fontWeight: FontWeight.normal, color: Colors.black),
+            decoration: InputDecoration(
+              labelText: 'Catégories',
+              contentPadding: EdgeInsets.fromLTRB(20.0, 70.0, 20.0, 10.0),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            ),
             enabled: false,
-            controller:  _ControllerCategorie,
+            controller: _ControllerCategorie,
           ),
           TextFormField(
-            style: new TextStyle(fontWeight: FontWeight.normal, color: Colors.black),
-            decoration: InputDecoration(labelText: 'Stats',contentPadding: EdgeInsets.fromLTRB(20.0, 70.0, 20.0, 10.0),
-              border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(32.0)
-              ),),
+            style: new TextStyle(
+                fontWeight: FontWeight.normal, color: Colors.black),
+            decoration: InputDecoration(
+              labelText: 'Stats',
+              contentPadding: EdgeInsets.fromLTRB(20.0, 70.0, 20.0, 10.0),
+              border:
+                  OutlineInputBorder(borderRadius: BorderRadius.circular(32.0)),
+            ),
             enabled: false,
             controller: _ControllerStats,
           ),
@@ -203,8 +217,27 @@ class SecondRoute extends StatelessWidget {
               Navigator.pop(context);
             },
           ),
+          RaisedButton(
+            child: Text('Trouver sur Map'),
+            onPressed: () {
+              MapUtils.openMap(venues.location.lat, venues.location.lng);
+            },
+          ),
         ],
       ),
     );
+  }
+}
+
+class MapUtils {
+  static openMap(double latitude, double longitude) async {
+    print('oui');
+    String googleUrl =
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    if (await canLaunch(googleUrl)) {
+      await launch(googleUrl);
+    } else {
+      throw 'Could not open the map.';
+    }
   }
 }
