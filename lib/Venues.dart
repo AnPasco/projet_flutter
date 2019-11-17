@@ -15,11 +15,11 @@ class Venues{
 
   Venues(this.id, this.name, this.location, this.categories, this.stat);
 
-  Venues.fromMappedJson(Map<String, dynamic> json):id = json['id'], name = json['name'], location = new Location(json['lat'], json['lng'], json['distance'], json['country'], json['adresse'], json['city'],json['state'],json['postalCode']),categories = new Categories(json['categories'][0]['id'], json['categories'][0]['name']),stat = new Stat(json['stats']['tipCount'], json['stats']['usersCount']);
+  Venues.fromMappedJson(Map<String, dynamic> json):id = json['id'], name = json['name'], location = new Location(json['location']['lat'], json['location']['lng'], json['location']['distance'], json['location']['country'], json['location']['adresse'], json['location']['city'],json['location']['state'],json['location']['postalCode']),categories = new Categories(json['categories'][0]['id'], json['categories'][0]['name']),stat = new Stat(json['stats']['tipCount'], json['stats']['usersCount']);
 
   @override
   String toString() {
-    return name +" " + location.address;
+    return  ("\n  "+name +"\n" + location.toString()+"\n");
   }
 
 

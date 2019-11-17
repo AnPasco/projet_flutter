@@ -39,14 +39,10 @@ class MyCustomFormState extends State<MyCustomForm> {
   var lieux = new List<Venues>();
 
   @override
-  void initState() {
-    lieux.add(new Venues("", "", null, null, null));
-  }
-
-  @override
   Widget build(BuildContext context) {
     _testUri(String motchercher, String ville) async {
       try {
+        lieux.clear();
         var response = await http.get(Uri.parse(
             "https://api.foursquare.com/v2/venues/search?client_id=ZJOYKBUEJOZ4DVRYKWWARZQIZUCLR54W5UAUODPILW3UD2KV&client_secret=" +
                 CLEF +
@@ -61,15 +57,13 @@ class MyCustomFormState extends State<MyCustomForm> {
           print('Response \n\n\t: ${venueMap['response']['venues'][count]}');
           var venue =
               Venues.fromMappedJson(venueMap['response']['venues'][count]);
-          print("=========================================================\n" +
-              venue.id +
-              " " +
-              venue.name);
-          lieux.add(venue);
+          setState(() {
+            lieux.add(venue);
+          });
           count++;
         } // Append Text to the list
+
         // Clear the Text area
-        setState(() {});
         // return lieux; comment on fait un ptn de return ??? Tu peux pass ici -- jcrois faut faire une fonction que tu apelle
 
       } catch (e) {
@@ -129,9 +123,21 @@ class MyCustomFormState extends State<MyCustomForm> {
           ),
           Expanded(
               child: new ListView.builder(
-                  itemCount: lieux.length,
-                  itemBuilder: (BuildContext context, int Index) {
-                    return new Text(lieux[Index].toString(),style: TextStyle(fontSize: 20),);
+                  itemCount: (lieux == null) ? 0 : lieux.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return  Padding(
+                        padding: EdgeInsets.only(bottom: 16.0),
+                        child: Card(
+                          color: Colors.white,
+                          child: Padding(
+                            padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
+                            child: Text(lieux[index].toString(), style: TextStyle(
+                              fontSize: 18.0,
+                              height: 1.6,
+                            ),),
+                          ),
+                        )
+                    );
                   })),
         ],
       ),

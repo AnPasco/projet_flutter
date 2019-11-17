@@ -18,6 +18,12 @@ class Location {
   Location(this.lat, this.lng, this.distance, this.country, this.address, this.city,this.state,this.postalCode);
 
   static fromJson(Map<String,dynamic > json) {}
+
+  @override
+  String toString() {
+    return '  ville $city \n  address: $address\n  vous êtes à une distance de $distance m';
+  }
+
 }
 
 
