@@ -153,6 +153,7 @@ class SecondRoute extends StatelessWidget {
     _ControllerNom.text = venues.name;
     _ControllerLocalision.text = venues.location.toString();
     _ControllerCategorie.text ="" ;
+    _ControllerCategorie.text = venues.categories.toString();
     return Scaffold(
       appBar: AppBar(
         title: Text("Informations"),

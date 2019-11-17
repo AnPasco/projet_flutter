@@ -9,4 +9,11 @@ class Categories{
   Categories(this.id, this.name);
 
   static fromJson(Map<String,dynamic> json) {}
+
+  @override
+  String toString() {
+    return 'Categories :  $name';
+  }
+
+
 }
