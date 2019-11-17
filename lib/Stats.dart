@@ -10,4 +10,11 @@ class Stat {
   Stat(this.tipCount, this.usersCount);
 
   static fromJson(Map<String,dynamic > json) {}
+
+  @override
+  String toString() {
+    return 'Nombre de conseil : $tipCount\nNombre de passage : $usersCount';
+  }
+
+
 }

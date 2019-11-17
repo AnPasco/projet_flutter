@@ -149,10 +149,9 @@ class SecondRoute extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    _ControllerStats.text = "";
+    _ControllerStats.text = venues.stat.toString();
     _ControllerNom.text = venues.name;
     _ControllerLocalision.text = venues.location.toString();
-    _ControllerCategorie.text ="" ;
     _ControllerCategorie.text = venues.categories.toString();
     return Scaffold(
       appBar: AppBar(
@@ -162,22 +161,39 @@ class SecondRoute extends StatelessWidget {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: <Widget>[
           TextFormField(
-            decoration: InputDecoration(labelText: 'Nom'),
+            style: new TextStyle(fontWeight: FontWeight.normal, color: Colors.black),
+            decoration: InputDecoration(labelText: 'Nom',contentPadding: EdgeInsets.fromLTRB(20.0, 50.0, 20.0, 10.0),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32.0)
+              ),),
             enabled: false,
             controller:_ControllerNom ,
+
           ),
           TextFormField(
-            decoration: InputDecoration(labelText: 'Location'),
+            style: new TextStyle(fontWeight: FontWeight.normal, color: Colors.black),
+            decoration: InputDecoration(labelText: 'Location',contentPadding: EdgeInsets.fromLTRB(20.0, 50.0, 50.0, 50.0),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32.0)
+              ),),
             enabled: false,
             controller: _ControllerLocalision,
           ),
           TextFormField(
-            decoration: InputDecoration(labelText: 'Catégories'),
+            style: new TextStyle(fontWeight: FontWeight.normal, color: Colors.black),
+            decoration: InputDecoration(labelText: 'Catégories',contentPadding: EdgeInsets.fromLTRB(20.0, 70.0, 20.0, 10.0),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32.0)
+              ),),
             enabled: false,
             controller:  _ControllerCategorie,
           ),
           TextFormField(
-            decoration: InputDecoration(labelText: 'Stats'),
+            style: new TextStyle(fontWeight: FontWeight.normal, color: Colors.black),
+            decoration: InputDecoration(labelText: 'Stats',contentPadding: EdgeInsets.fromLTRB(20.0, 70.0, 20.0, 10.0),
+              border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(32.0)
+              ),),
             enabled: false,
             controller: _ControllerStats,
           ),
