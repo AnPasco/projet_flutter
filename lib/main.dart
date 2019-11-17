@@ -70,7 +70,6 @@ class MyCustomFormState extends State<MyCustomForm> {
         print("================== ERREUR URL TEST : " + e.toString());
       }
     }
-
     TextEditingController _txtController1 = TextEditingController();
     TextEditingController _txtController2 = TextEditingController();
 
@@ -112,15 +111,6 @@ class MyCustomFormState extends State<MyCustomForm> {
               child: Text('Confirmer'),
             ),
           ),
-          RaisedButton(
-            child: Text('Open route'),
-            onPressed: () {
-              Navigator.push(
-                context,
-                MaterialPageRoute(builder: (context) => SecondRoute()),
-              );
-            },
-          ),
           Expanded(
               child: new ListView.builder(
                   itemCount: (lieux == null) ? 0 : lieux.length,
@@ -134,7 +124,10 @@ class MyCustomFormState extends State<MyCustomForm> {
                           height: 1.6,
                         ),
                       ),
-                      onTap: () {MaterialPageRoute(builder: (context) => SecondRoute());},
+                      onTap: () {Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) => SecondRoute(lieux[index])),
+                      );},
                     );
                   })),
         ],
@@ -144,6 +137,12 @@ class MyCustomFormState extends State<MyCustomForm> {
 }
 
 class SecondRoute extends StatelessWidget {
+  Venues venues;
+
+  SecondRoute(this.venues);
+
+
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
