@@ -138,13 +138,21 @@ class MyCustomFormState extends State<MyCustomForm> {
 
 class SecondRoute extends StatelessWidget {
   Venues venues;
+  TextEditingController _ControllerNom = TextEditingController();
+  TextEditingController _ControllerLocalision = TextEditingController();
+  TextEditingController _ControllerCategorie = TextEditingController();
+  TextEditingController _ControllerStats = TextEditingController();
+
 
   SecondRoute(this.venues);
 
 
-
   @override
   Widget build(BuildContext context) {
+    _ControllerStats.text = "";
+    _ControllerNom.text = venues.name;
+    _ControllerLocalision.text = venues.location.toString();
+    _ControllerCategorie.text ="" ;
     return Scaffold(
       appBar: AppBar(
         title: Text("Informations"),
@@ -155,42 +163,22 @@ class SecondRoute extends StatelessWidget {
           TextFormField(
             decoration: InputDecoration(labelText: 'Nom'),
             enabled: false,
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
+            controller:_ControllerNom ,
           ),
           TextFormField(
             decoration: InputDecoration(labelText: 'Location'),
             enabled: false,
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
+            controller: _ControllerLocalision,
           ),
           TextFormField(
             decoration: InputDecoration(labelText: 'Catégories'),
             enabled: false,
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
+            controller:  _ControllerCategorie,
           ),
           TextFormField(
             decoration: InputDecoration(labelText: 'Stats'),
             enabled: false,
-            validator: (value) {
-              if (value.isEmpty) {
-                return 'Please enter some text';
-              }
-              return null;
-            },
+            controller: _ControllerStats,
           ),
           RaisedButton(
             child: Text('Retour'),
