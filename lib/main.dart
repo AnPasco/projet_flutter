@@ -125,18 +125,16 @@ class MyCustomFormState extends State<MyCustomForm> {
               child: new ListView.builder(
                   itemCount: (lieux == null) ? 0 : lieux.length,
                   itemBuilder: (BuildContext context, int index) {
-                    return  Padding(
-                        padding: EdgeInsets.only(bottom: 16.0),
-                        child: Card(
-                          color: Colors.white,
-                          child: Padding(
-                            padding: EdgeInsets.symmetric(vertical: 24.0, horizontal: 16.0),
-                            child: Text(lieux[index].toString(), style: TextStyle(
-                              fontSize: 18.0,
-                              height: 1.6,
-                            ),),
-                          ),
-                        )
+                    return ListTile(
+                      subtitle: Text(lieux[index].toString()),
+                      title: Text(
+                        lieux[index].name,
+                        style: TextStyle(
+                          fontSize: 18.0,
+                          height: 1.6,
+                        ),
+                      ),
+                      onTap: () {MaterialPageRoute(builder: (context) => SecondRoute());},
                     );
                   })),
         ],
